@@ -1,31 +1,32 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StatusBar, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StatusBar, View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Context from '../../globalState/context';
 import axios from 'axios';
 import api from '../../api.json';
 import chooseItems from '../../styles/chooseItems'
+import { CommonActions } from '@react-navigation/native';
 
-const Router = () => {
+
+const Router = ({ navigation }) => {
 
     const { state, actions } = useContext(Context)
 
     const [copyDisplay, setcopyDisplay] = useState('Escoge una de nuestras prendas únicas.');
     const [productSet, setproductSet] = useState(false);
     const [productSelected, setproductSelected] = useState(false);
+    const [productList, setproductList] = useState([]);
+
 
     useEffect(() => {
-        axios.get(`${api.uri}/stands/${state.StandUUID}`)
-        .then(function (response) {
-            console.log(response.data)
-        })
-        .catch(function (error) {});
-
         axios.get(`${api.uri}/productos/?stand=${state.StandUUID}`)
         .then(function (response) {
-            console.log("Productos", response.data)
+            if (response.status === 200) {
+                setproductList(response.data);
+            }
         })
         .catch(function (error) {});
     }, [])
+
 
     const setProduct = (uuidItem) => {
         if (!productSet || productSelected !== uuidItem) {
@@ -40,6 +41,17 @@ const Router = () => {
         };
     }
 
+    const goBack = (screen) => {
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 1,
+                routes: [
+                { name: screen }
+                ],
+            })
+        )
+    }
+
     return (
             <>
             <StatusBar translucent={true} backgroundColor={'#0000'} barStyle="dark-content" />
@@ -49,33 +61,30 @@ const Router = () => {
                     <Text style={chooseItems.textCopy}>{copyDisplay}</Text>
                 </View>
                 <View style={chooseItems.productList}>
-                <TouchableOpacity onPress={() => setProduct('8d2ae58c-a6aa-488b-a069-9a8edd47c61c')} style={chooseItems.product} activeOpacity={1}>
-                        <View style={chooseItems.productInside}>
-                            <Image style={productSelected === '8d2ae58c-a6aa-488b-a069-9a8edd47c61c' ? chooseItems.productImgSelected : chooseItems.productImg} source={{uri: 'https://prueba-monoku-2020.s3.amazonaws.com/media/camiseta_logo_monoku.jpg'}}/>
-                            {
-                                productSelected === '8d2ae58c-a6aa-488b-a069-9a8edd47c61c' ?
-                                <Image style={chooseItems.markItem} source={require('../../assets/mark.png')}/>
-                                :
-                                null
-                            }
-                            <Text style={chooseItems.productText}>Gorra Gris</Text>
-                        </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setProduct('8d2ae58c-a6aa-488b-a069-9a8edd47c61')} style={chooseItems.product} activeOpacity={1}>
-                        <View style={chooseItems.productInside}>
-                            <Image style={productSelected === '8d2ae58c-a6aa-488b-a069-9a8edd47c61' ? chooseItems.productImgSelected : chooseItems.productImg} source={{uri: 'https://prueba-monoku-2020.s3.amazonaws.com/media/camiseta_logo_monoku.jpg'}}/>
-                            {
-                                productSelected === '8d2ae58c-a6aa-488b-a069-9a8edd47c61' ?
-                                <Image style={chooseItems.markItem} source={require('../../assets/mark.png')}/>
-                                :
-                                null
-                            }
-                            <Text style={chooseItems.productText}>Gorra Gris</Text>
-                        </View>
-                </TouchableOpacity>
+                {
+                    productList.length > 0 ?
+                    productList.map(product => {
+                        return(
+                            <TouchableOpacity key={product.id} onPress={() => setProduct(product.id)} style={chooseItems.product} activeOpacity={1}>
+                                    <View style={chooseItems.productInside}>
+                                        <Image style={productSelected === product.id ? chooseItems.productImgSelected : chooseItems.productImg} source={{uri: product.image}}/>
+                                        {
+                                            productSelected === product.id ?
+                                            <Image style={chooseItems.markItem} source={require('../../assets/mark.png')}/>
+                                            :
+                                            null
+                                        }
+                                        <Text style={chooseItems.productText}>{product.nombre}</Text>
+                                    </View>
+                            </TouchableOpacity>
+                        )
+                    })
+                    :
+                    <ActivityIndicator size="large" color="#5c359a" />
+                }
                 </View>
                 <View style={chooseItems.buttoms}>
-                    <TouchableOpacity /* onPress={() => sendForm()} */ style={chooseItems.buttomBack} title="Atras">
+                    <TouchableOpacity onPress={() => goBack('standsSelector')} style={chooseItems.buttomBack} title="Atras">
                         <Text style={chooseItems.textButtom}>Atrás</Text>
                     </TouchableOpacity>
                 </View>

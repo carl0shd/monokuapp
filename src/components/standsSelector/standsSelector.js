@@ -2,21 +2,30 @@ import React, { useContext } from 'react'
 import { Text, View, StatusBar, TouchableOpacity } from 'react-native'
 import { CommonActions } from '@react-navigation/native';
 import Context from '../../globalState/context';
+import axios from 'axios';
+import api from '../../api.json';
+
 
 const standsSelector = ({ navigation }) => {
 
     const { state, actions } = useContext(Context)
 
     const changeScreen = async (uuid) => {
-        await actions({ type: "setState", payload: { ...state, StandUUID: uuid } })
-        navigation.dispatch(
-            CommonActions.reset({
-                index: 1,
-                routes: [
-                { name: "chooseItemStand" }
-                ],
-            })
-        )
+        axios.get(`${api.uri}/stands/${uuid}`)
+        .then(async function (response) {
+            if (response.status === 200) {
+                await actions({ type: "setState", payload: { ...state, StandUUID: response.data.id } })
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [
+                        { name: "chooseItemStand" }
+                        ],
+                    })
+                )
+            }
+        })
+        .catch(function (error) {});
     }
 
     return(
