@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="31px" height="31px" viewBox="0 0 31 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>mark@1x</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Coffee/Drinks/Selected" transform="translate(-106.000000, -10.000000)">
+            <g id="Coffee/Drinks/Normal">
+                <g id="mark" transform="translate(106.000000, 10.000000)">
+                    <circle id="Oval" fill="#2CA041" cx="15.5" cy="15.5" r="15.5"></circle>
+                    <polygon id="Icon--Check" fill="#FFFFFF" fill-rule="nonzero" transform="translate(15.500000, 14.000000) rotate(37.000000) translate(-15.500000, -14.000000) " points="16.85 20 11 20 11 23 20 23 20 5 16.85 5"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

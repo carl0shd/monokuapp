@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="375px" height="812px" viewBox="0 0 375 812" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>scanner-overlay@1x</title>
+    <defs>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="72.4644727%" id="radialGradient-1">
+            <stop stop-color="#000000" stop-opacity="0.281222684" offset="0%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="☕️-Coffee-Machine" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="002">
+            <g id="scanner-overlay">
+                <path d="M375,0 L375,812 L0,812 L0,0 L375,0 Z M188,256 C105.157288,256 38,323.157288 38,406 C38,488.842712 105.157288,556 188,556 C270.842712,556 338,488.842712 338,406 C338,323.157288 270.842712,256 188,256 Z" id="overlya-scanner" fill="#5B329A" opacity="0.9"></path>
+                <g id="Scan" transform="translate(30.000000, 246.500000)">
+                    <circle id="Overlay-Scan" fill="url(#radialGradient-1)" opacity="0.524600074" cx="158" cy="159.5" r="150"></circle>
+                    <path d="M161,129.5 L161,156.5 L188,156.5 L188,162.5 L161,162.5 L161,189.5 L155,189.5 L155,162.5 L128,162.5 L128,156.5 L155,156.5 L155,129.5 L161,129.5 Z M185,168.5 L185,177.5 L179,177.5 L179,174.5 L173,174.5 L173,180.5 L176,180.5 L176,186.5 L167,186.5 L167,168.5 L185,168.5 Z M185,180.5 L185,186.5 L179,186.5 L179,180.5 L185,180.5 Z M149,168.5 L149,186.5 L131,186.5 L131,168.5 L149,168.5 Z M143,174.5 L137,174.5 L137,180.5 L143,180.5 L143,174.5 Z M149,132.5 L149,150.5 L131,150.5 L131,141.5 L137,141.5 L137,144.5 L143,144.5 L143,138.5 L140,138.5 L140,132.5 L149,132.5 Z M185,132.5 L185,150.5 L167,150.5 L167,132.5 L185,132.5 Z M179,138.5 L173,138.5 L173,144.5 L179,144.5 L179,138.5 Z M137,132.5 L137,138.5 L131,138.5 L131,132.5 L137,132.5 Z" id="QR-Icon" fill="#FFFFFF" fill-rule="nonzero" opacity="0.8"></path>
+                    <g id="Scanner-Lines" stroke="#FFFFFF" stroke-linecap="square" stroke-width="2">
+                        <g id="Group" transform="translate(159.000000, 0.000000)">
+                            <line x1="0.5" y1="0.5" x2="0.5" y2="20.5" id="Line"></line>
+                            <line x1="0.5" y1="298.5" x2="0.5" y2="318.5" id="Line"></line>
+                        </g>
+                        <g id="Group" transform="translate(159.500000, 159.500000) rotate(-270.000000) translate(-159.500000, -159.500000) translate(159.000000, 0.000000)">
+                            <line x1="0.5" y1="0.5" x2="0.5" y2="20.5" id="Line"></line>
+                            <line x1="0.5" y1="298.5" x2="0.5" y2="318.5" id="Line"></line>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
