@@ -3,7 +3,7 @@ import Context from '../globalState/context'
 import { StatusBar } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 // Importing Screens
@@ -11,6 +11,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import standsSelector from '../components/standsSelector/standsSelector';
 import chooseItems from '../components/chooseItems/chooseItems';
 import itemDescription from '../components/itemDescription/itemDescription';
+import requestItem from '../components/requestItem/requestItem';
+import finalScreen from '../components/finalScreen/finalScreen';
+
 
 const Router = () => {
 
@@ -26,6 +29,8 @@ const Router = () => {
                     <Stack.Screen name="standsSelector" component={standsSelector} />
                     <Stack.Screen name="chooseItemStand" component={chooseItems} />
                     <Stack.Screen name="itemDescription" component={itemDescription} />
+                    <Stack.Screen name="requestItem" component={requestItem} />
+                    <Stack.Screen name="finalScreen" component={finalScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
             </>

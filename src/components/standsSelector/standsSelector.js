@@ -31,12 +31,14 @@ const standsSelector = ({ navigation }) => {
     return(
         <>
             <StatusBar translucent={false} backgroundColor={'#00000030'} barStyle="light-content" />
-            <TouchableOpacity onPress={() => changeScreen('93e270b3-f492-493c-b0d2-96e207d77490')} title="Stand1">
-                <Text>stand1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => changeScreen('e61cda92-083c-49e8-9878-a008164830fb')} title="Stand2">
-                <Text>stand2</Text>
-            </TouchableOpacity>
+            <View style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}>
+                <TouchableOpacity onPress={() => changeScreen('93e270b3-f492-493c-b0d2-96e207d77490')} title="Stand1">
+                    <Text style={{fontSize: 30, marginBottom: 30}}>Stand 1</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => changeScreen('e61cda92-083c-49e8-9878-a008164830fb')} title="Stand2">
+                    <Text style={{fontSize: 30, marginBottom: 30}}>Stand 2</Text>
+                </TouchableOpacity>
+            </View>
         </>
     )
 }

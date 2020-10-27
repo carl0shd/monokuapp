@@ -43,7 +43,7 @@ const ChooseItems = ({ navigation }) => {
                         ],
                     })
                 )
-            }, 1500);
+            }, 2000);
         }
         else{
             setcopyDisplay('Escoge una de nuestras prendas únicas.');

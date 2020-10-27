@@ -20,28 +20,25 @@ const itemDescription = ({ navigation }) => {
         .then(function (response) {
             if (response.status === 200) {
                 setoptions(response.data);
+                actions({ type: "setState", payload: { ...state, id: response.data[0].id } })
             }
         })
         .catch(function (error) {});
     }, [])
 
-    const goBack = (screen) => {
+    const changeScreen = async (screen) => {
+        let json = {
+            "nombre": size.nombre,
+            "slug": size.slug,
+            "orden": size.orden,
+            "producto": size.producto
+        }
+        await actions({ type: "setState", payload: { ...state, option: json } })
         navigation.dispatch(
             CommonActions.reset({
                 index: 1,
                 routes: [
-                { name: 'chooseItemStand' }
-                ],
-            })
-        )
-    }
-
-    const goNext = (screen) => {
-        navigation.dispatch(
-            CommonActions.reset({
-                index: 1,
-                routes: [
-                { name: 'chooseItemStand' }
+                { name: screen }
                 ],
             })
         )
@@ -72,7 +69,7 @@ const itemDescription = ({ navigation }) => {
                             options.length > 0 ?
                             options.map((option, id) => {
                                 return(
-                                    <TouchableOpacity key={id} onPress={() => selectSize(option.nombre)}>
+                                    <TouchableOpacity key={id} onPress={() => selectSize(option)}>
                                         <View style={itemSelectorStyles.sizeContainer}>
                                             <Text style={itemSelectorStyles. sizeText}>{option.nombre}</Text>
                                         </View>
@@ -85,16 +82,16 @@ const itemDescription = ({ navigation }) => {
                     </ScrollView>
                 </SafeAreaView>
                 <View style={itemSelectorStyles.buttoms}>
-                    {status ? 
-                        <TouchableOpacity style={itemSelectorStyles.buttomNext} title="Atras">
+                    {!status ? 
+                        <TouchableOpacity style={itemSelectorStyles.buttomNextDisabled} title="Siguiente">
                             <Text style={itemSelectorStyles.textNextButtom}>Siguiente</Text>
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity onPress={() => goNext('standsSelector')} style={itemSelectorStyles.buttomNextDisabled} title="Atras">
+                        <TouchableOpacity onPress={() => changeScreen('requestItem')} style={itemSelectorStyles.buttomNext} title="Siguiente">
                             <Text style={itemSelectorStyles.textNextButtom}>Siguiente</Text>
                         </TouchableOpacity>
                     }
-                    <TouchableOpacity onPress={() => goBack('standsSelector')} style={itemSelectorStyles.buttomBack} title="Atras">
+                    <TouchableOpacity onPress={() => changeScreen('chooseItemStand')} style={itemSelectorStyles.buttomBack} title="Atras">
                         <Text style={itemSelectorStyles.textButtom}>Atrás</Text>
                     </TouchableOpacity>
                 </View>

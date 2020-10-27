@@ -3,11 +3,11 @@ import { StatusBar, View, Text, Image, SafeAreaView, ScrollView, TouchableOpacit
 import Context from '../../globalState/context';
 import axios from 'axios';
 import api from '../../api.json';
-import itemSelectorStyles from '../../styles/itemDescriptionStyles'
+import RequestItemStyles from '../../styles/RequestItemStyles'
 import { CommonActions } from '@react-navigation/native';
 
 
-const RequestItem = ({ navigation }) => {
+const requestItem = ({ navigation }) => {
 
     const { state, actions } = useContext(Context)
 
@@ -36,66 +36,53 @@ const RequestItem = ({ navigation }) => {
         )
     }
 
-    const goNext = (screen) => {
+    const changeScreen = (screen) => {
         navigation.dispatch(
             CommonActions.reset({
                 index: 1,
                 routes: [
-                { name: 'chooseItemStand' }
+                { name: screen }
                 ],
             })
         )
     }
 
-    const selectSize = (size) => {
-        setsize(size);
-        setstatus(true);
+    const requestItem = (screen) => {
+        axios.post(`${api.uri}/opciones-producto/${state.id}/solicitar/`, state.option)
+        .then(function (response) {
+            if (response.data.status === "completed") {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [
+                        { name: 'finalScreen' }
+                        ],
+                    })
+                )
+            }
+        })
+        .catch(function (error) {});
     }
 
     return (
             <>
             <StatusBar translucent={true} backgroundColor={'#eaeaea'} barStyle="dark-content" />
-            <View style={itemSelectorStyles.body}>
+            <View style={RequestItemStyles.body}>
                 <View>
-                    <Image style={itemSelectorStyles.productImg} source={{uri: state.product.image}}/>
-                    <Text style={itemSelectorStyles.productText}>{state.product.nombre}</Text>
+                    <Text style={RequestItemStyles.copyText}>Ya casi terminas!</Text>
                 </View>
                 <View>
-                    <Text style={itemSelectorStyles.copyText}>Escogiste algo increíble!</Text>
+                    <Text style={RequestItemStyles.productReady}>Listx?!</Text>
                 </View>
-                <View>
-                    <Text style={itemSelectorStyles.selectorText}>Ahora, selecciona una opción.</Text>
+                <View style={RequestItemStyles.productImgBig}>
+                    <Image style={RequestItemStyles.productBig} source={{uri: state.product.image}}/>
                 </View>
-                <SafeAreaView style={itemSelectorStyles.sizesMaster}>
-                    <ScrollView showsVerticalScrollIndicator={false} style={itemSelectorStyles.scrollSizes}>
-                        {
-                            options.length > 0 ?
-                            options.map((option, id) => {
-                                return(
-                                    <TouchableOpacity key={id} onPress={() => selectSize(option.nombre)}>
-                                        <View style={itemSelectorStyles.sizeContainer}>
-                                            <Text style={itemSelectorStyles. sizeText}>{option.nombre}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                )
-                            })
-                            :
-                            <ActivityIndicator size="large" color="#5c359a" />
-                        }
-                    </ScrollView>
-                </SafeAreaView>
-                <View style={itemSelectorStyles.buttoms}>
-                    {status ? 
-                        <TouchableOpacity style={itemSelectorStyles.buttomNext} title="Atras">
-                            <Text style={itemSelectorStyles.textNextButtom}>Siguiente</Text>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity onPress={() => goNext('standsSelector')} style={itemSelectorStyles.buttomNextDisabled} title="Atras">
-                            <Text style={itemSelectorStyles.textNextButtom}>Siguiente</Text>
-                        </TouchableOpacity>
-                    }
-                    <TouchableOpacity onPress={() => goBack('standsSelector')} style={itemSelectorStyles.buttomBack} title="Atras">
-                        <Text style={itemSelectorStyles.textButtom}>Atrás</Text>
+                <View style={RequestItemStyles.buttoms}>
+                    <TouchableOpacity onPress={() => requestItem('finalScreen')} style={RequestItemStyles.buttomNext} title="Siguiente">
+                        <Text style={RequestItemStyles.textNextButtom}>Pedir</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => changeScreen('itemDescription')} style={RequestItemStyles.buttomBack} title="Atras">
+                        <Text style={RequestItemStyles.textButtom}>Atrás</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -103,4 +90,4 @@ const RequestItem = ({ navigation }) => {
         );
     };
 
-export default RequestItem;
+export default requestItem;
