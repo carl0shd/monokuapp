@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
 const State = {
-    StandUUID: ""
+    StandUUID: "",
+    product: {}
 }
 
 const useGlobalState = () => {

@@ -3,11 +3,11 @@ import { StatusBar, View, Text, Image, TouchableOpacity, ActivityIndicator } fro
 import Context from '../../globalState/context';
 import axios from 'axios';
 import api from '../../api.json';
-import chooseItems from '../../styles/chooseItems'
+import chooseItemsStyles from '../../styles/chooseItemsStyles'
 import { CommonActions } from '@react-navigation/native';
 
 
-const Router = ({ navigation }) => {
+const ChooseItems = ({ navigation }) => {
 
     const { state, actions } = useContext(Context)
 
@@ -28,11 +28,22 @@ const Router = ({ navigation }) => {
     }, [])
 
 
-    const setProduct = (uuidItem) => {
+    const setProduct = async (uuidItem, item) => {
         if (!productSet || productSelected !== uuidItem) {
             setcopyDisplay('Escoge uno de nuestros diseños originales.');
             setproductSelected(uuidItem);
             setproductSet(true);
+            await actions({ type: "setState", payload: { ...state, product: item } })
+            setTimeout(() => {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [
+                        { name: 'itemDescription' }
+                        ],
+                    })
+                )
+            }, 1500);
         }
         else{
             setcopyDisplay('Escoge una de nuestras prendas únicas.');
@@ -55,26 +66,26 @@ const Router = ({ navigation }) => {
     return (
             <>
             <StatusBar translucent={true} backgroundColor={'#0000'} barStyle="dark-content" />
-            <View style={chooseItems.containerHome}>
-                <View style={chooseItems.containerText}>
-                    <Text style={chooseItems.textTop}>Felicitaciones!</Text>
-                    <Text style={chooseItems.textCopy}>{copyDisplay}</Text>
+            <View style={chooseItemsStyles.containerHome}>
+                <View style={chooseItemsStyles.containerText}>
+                    <Text style={chooseItemsStyles.textTop}>Felicitaciones!</Text>
+                    <Text style={chooseItemsStyles.textCopy}>{copyDisplay}</Text>
                 </View>
-                <View style={chooseItems.productList}>
+                <View style={chooseItemsStyles.productList}>
                 {
                     productList.length > 0 ?
                     productList.map(product => {
                         return(
-                            <TouchableOpacity key={product.id} onPress={() => setProduct(product.id)} style={chooseItems.product} activeOpacity={1}>
-                                    <View style={chooseItems.productInside}>
-                                        <Image style={productSelected === product.id ? chooseItems.productImgSelected : chooseItems.productImg} source={{uri: product.image}}/>
+                            <TouchableOpacity key={product.id} onPress={() => setProduct(product.id, product)} style={chooseItemsStyles.product} activeOpacity={1}>
+                                    <View style={chooseItemsStyles.productInside}>
+                                        <Image style={productSelected === product.id ? chooseItemsStyles.productImgSelected : chooseItemsStyles.productImg} source={{uri: product.image}}/>
                                         {
                                             productSelected === product.id ?
-                                            <Image style={chooseItems.markItem} source={require('../../assets/mark.png')}/>
+                                            <Image style={chooseItemsStyles.markItem} source={require('../../assets/mark.png')}/>
                                             :
                                             null
                                         }
-                                        <Text style={chooseItems.productText}>{product.nombre}</Text>
+                                        <Text style={chooseItemsStyles.productText}>{product.nombre}</Text>
                                     </View>
                             </TouchableOpacity>
                         )
@@ -83,9 +94,9 @@ const Router = ({ navigation }) => {
                     <ActivityIndicator size="large" color="#5c359a" />
                 }
                 </View>
-                <View style={chooseItems.buttoms}>
-                    <TouchableOpacity onPress={() => goBack('standsSelector')} style={chooseItems.buttomBack} title="Atras">
-                        <Text style={chooseItems.textButtom}>Atrás</Text>
+                <View style={chooseItemsStyles.buttoms}>
+                    <TouchableOpacity onPress={() => goBack('standsSelector')} style={chooseItemsStyles.buttomBack} title="Atras">
+                        <Text style={chooseItemsStyles.textButtom}>Atrás</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -93,4 +104,4 @@ const Router = ({ navigation }) => {
         );
     };
 
-export default Router;
+export default ChooseItems;

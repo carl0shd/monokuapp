@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import standsSelector from '../components/standsSelector/standsSelector';
 import chooseItems from '../components/chooseItems/chooseItems';
-
+import itemDescription from '../components/itemDescription/itemDescription';
 
 const Router = () => {
 
@@ -25,6 +25,7 @@ const Router = () => {
                 <Stack.Navigator headerMode="none">
                     <Stack.Screen name="standsSelector" component={standsSelector} />
                     <Stack.Screen name="chooseItemStand" component={chooseItems} />
+                    <Stack.Screen name="itemDescription" component={itemDescription} />
                 </Stack.Navigator>
             </NavigationContainer>
             </>
