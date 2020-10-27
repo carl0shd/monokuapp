@@ -107,7 +107,7 @@ const itemSelector = StyleSheet.create({
     },
     productImgBig: {
         width: '100%',
-        height: 470,
+        height: 300,
         justifyContent: 'center',
         alignItems: 'center'
     },
